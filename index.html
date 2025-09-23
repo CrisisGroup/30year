@@ -1,56 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crisis Group Turns 30 – Scroll Report</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-      overflow-x: hidden;
-    }
-    .page {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      background: #111;
-      color: white;
-    }
-    .horizontal-section {
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-      background: #222;
-    }
-    .horizontal-track {
-      display: flex;
-      width: 300vw;
-      height: 100vh;
-      position: sticky;
-      top: 0;
-    }
-    .horizontal-panel {
-      width: 100vw;
-      height: 100vh;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      background: #333;
-      color: white;
-      border-left: 1px solid #444;
-    }
-  </style>
+  <title>Crisis Group Turns 30 – Special Report</title>
+  <link href="style.css" rel="stylesheet" />
 </head>
+
 <body>
   <!-- Vertical Scroll: Pages 1–5 -->
-  <section class="page">Page 1 – Title Slide</section>
-  <section class="page">Page 2 – 1993–1994</section>
+
+  <section class="page">
+    <h1>Crisis Group’s 30 Years on the Frontlines</h1>
+    <h2 id="introchap">1995 - 2025</h2>
+  </section>
+
+  <section class="page page--split">
+  <div class="split-col image-col">
+    <img src="images/1993.jpg" alt="Crisis Group team on flight out of wartorn Sarajevo" />
+  </div>
+  <div class="split-col text-col">
+    <div class="timeline-dot"></div>
+    <h2>1993–1994</h2>
+    <p>
+      On a flight out of wartorn Sarajevo, Mort Abramovich and Mark Malloch-Brown
+      conceive of an organisation to serve as the world’s eyes and ears, warning
+      of impending conflicts before they erupt.
+    </p>
+    <p>
+      A small team, including humanitarian Fred Cluny and former Congressman
+      Steve Solar, begin to flesh out the idea and search for funding, following
+      an initial donation from philanthropist George Soros.
+    </p>
+  </div>
+</section>
+
   <section class="page">Page 3 – 1995–1996</section>
   <section class="page">Page 4 – 1997–1999</section>
   <section class="page">Page 5 – 2000</section>
@@ -79,17 +64,93 @@
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.to(".horizontal-track", {
-      xPercent: -200, // 3 panels = -100 * (n - 1)
+    const section = document.querySelector("#horizontal-scroll");
+    const track = section.querySelector(".horizontal-track");
+    const panels = gsap.utils.toArray(".horizontal-panel");
+
+    // Distance to translate = total content width - viewport width
+    function getScrollDistance() {
+      return track.scrollWidth - section.clientWidth; // px
+    }
+
+    // Core horizontal scroller: vertical scroll drives horizontal x
+    const horiz = gsap.to(track, {
+      x: () => -getScrollDistance(),
       ease: "none",
       scrollTrigger: {
-        trigger: "#horizontal-scroll",
+        trigger: section,
         start: "top top",
-        end: () => `+=${document.querySelector("#horizontal-scroll").offsetWidth}`,
+        end: () => "+=" + getScrollDistance(),
         scrub: true,
         pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true
+      }
+    });
+
+    // Optional: snap to each panel (feels great with scrub)
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: () => "+=" + getScrollDistance(),
+      scrub: true,
+      snap: {
+        // snap points are panel widths divided by total width
+        snapTo: (value) => {
+          const total = getScrollDistance();
+          if (total <= 0) return 0;
+          const progress = value / total; // 0..1
+          const steps = panels.length - 1;
+          const snapped = Math.round(progress * steps) / steps;
+          return snapped;
+        },
+        duration: 0.3,
+        ease: "power1.out"
+      }
+    });
+
+    // Handle resizes / font loads / image loads
+    const ro = new ResizeObserver(() => ScrollTrigger.refresh());
+    ro.observe(section);
+    ro.observe(track);
+
+    // Extra polish: allow left/right arrows to move by one panel while pinned
+    window.addEventListener("keydown", (e) => {
+      const st = ScrollTrigger.getAll().find(s => s.trigger === section);
+      if (!st || !st.isActive) return;
+      if (e.key === "ArrowRight" || e.key === "PageDown") {
+        e.preventDefault();
+        snapToIndex(+1);
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
+        snapToIndex(-1);
+      }
+    });
+
+    function snapToIndex(delta) {
+      const st = ScrollTrigger.getAll().find(s => s.trigger === section);
+      const steps = panels.length - 1;
+      const currentIndex = Math.round(st.progress * steps);
+      const nextIndex = Math.min(steps, Math.max(0, currentIndex + delta));
+      const targetProgress = steps ? nextIndex / steps : 0;
+      gsap.to(window, {
+        scrollTo: st.start + targetProgress * (st.end - st.start),
+        duration: 0.35,
+        ease: "power2.out"
+      });
+    }
+
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: () => "+=" + getScrollDistance(),
+      onUpdate: (self) => {
+        const idx = Math.round(self.progress * (panels.length - 1));
+        history.replaceState(null, "", `#p${6 + idx}`); // Pages 6..8 in your example
       }
     });
   </script>
 </body>
+
 </html>

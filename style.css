@@ -1,0 +1,144 @@
+:root {
+    --bg-1: #111;
+    --bg-2: #222;
+    --bg-3: #333;
+    --fg: #fff;
+    --rule: #444;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    overflow-x: hidden;
+    background: var(--bg-1);
+    color: var(--fg);
+}
+
+h1, h2 {
+    font-family: 'Gill Sans MT', sans-serif;
+}
+
+h2#introchap {
+    font-family: Georgia, serif;
+}
+
+p {
+    font-family: Georgia, serif;
+}
+
+.page {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: clamp(1.25rem, 4vw, 2.5rem);
+    background: var(--bg-1);
+    color: var(--fg);
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+
+.horizontal-section {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--bg-2);
+    overscroll-behavior: none;
+}
+
+
+.horizontal-track {
+    display: flex;
+    height: 100%;
+    will-change: transform;
+}
+
+
+.horizontal-panel {
+    min-width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.25rem, 4vw, 2.5rem);
+    background: var(--bg-3);
+    color: var(--fg);
+    border-left: 1px solid var(--rule);
+}
+
+
+.horizontal-panel:nth-child(odd) {
+    background: rgba(255, 255, 255, .05);
+}
+
+.horizontal-panel:nth-child(even) {
+    background: rgba(255, 255, 255, .10);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    .horizontal-track {
+        transition: none !important;
+    }
+}
+
+/* CHAPTER SPEC */
+
+/* Split layout for special chapters */
+.page--split {
+  display: flex;
+  flex-wrap: wrap; /* graceful on mobile */
+  background: #213540; /* sample background from comp */
+  color: #fff;
+  padding: clamp(1rem, 4vw, 3rem);
+  gap: 2rem;
+}
+
+.split-col {
+  flex: 1 1 45%;
+  position: relative;
+}
+
+.image-col img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.5);
+}
+
+.text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.text-col h2 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.text-col p {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+/* Timeline vertical divider & dot */
+.page--split {
+  border-left: 2px solid rgba(255,255,255,.25);
+  position: relative;
+}
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  left: -7px; /* centers over divider line */
+  top: 1.5rem;
+}
