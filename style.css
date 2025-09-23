@@ -16,7 +16,8 @@ body {
     color: var(--fg);
 }
 
-h1, h2 {
+h1,
+h2 {
     font-family: 'Gill Sans MT', sans-serif;
 }
 
@@ -86,59 +87,55 @@ p {
     }
 }
 
-/* CHAPTER SPEC */
 
-/* Split layout for special chapters */
+
+
+.page--split,
+.page--split * { box-sizing: border-box; }
+
+/* 2) Desktop / default: two columns */
 .page--split {
   display: flex;
-  flex-wrap: wrap; /* graceful on mobile */
-  background: #213540; /* sample background from comp */
+  align-items: center;           /* vertical centering */
+  gap: 2rem;                     /* space between image and text */
+  padding: clamp(16px, 4vw, 48px);
+  background: #213540;           /* or your chapter bg */
   color: #fff;
-  padding: clamp(1rem, 4vw, 3rem);
-  gap: 2rem;
+  min-height: 100vh;             /* full-screen chapter */
 }
 
-.split-col {
-  flex: 1 1 45%;
-  position: relative;
-}
-
+/* columns */
+.split-col { flex: 1 1 0; min-width: 0; }  /* min-width:0 prevents text overflow */
 .image-col img {
-  max-width: 100%;
+  display: block;
+  width: 100%;
   height: auto;
-  border: 2px solid #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,.5);
+  max-height: calc(100vh - 2 * clamp(16px, 4vw, 48px)); /* avoid overflowing viewport */
+  object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45);
 }
 
-.text-col {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+/* text */
+.text-col { display: flex; flex-direction: column; justify-content: center; }
+.text-col h2 { margin: 0 0 .6rem; font-size: clamp(1.75rem, 5vw, 2.75rem); }
+.text-col p  { margin: 0 0 .9rem; font-size: clamp(1rem, 2.4vw, 1.15rem); line-height: 1.5; max-width: 52ch; }
 
-.text-col h2 {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  margin-top: 0;
-  margin-bottom: 0.75rem;
-}
+/* 3) Hide divider/dot while we simplify */
+.split-divider, .split-dot { display: none !important; }
 
-.text-col p {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  line-height: 1.5;
-  margin: 0 0 1rem;
-}
-
-/* Timeline vertical divider & dot */
-.page--split {
-  border-left: 2px solid rgba(255,255,255,.25);
-  position: relative;
-}
-.timeline-dot {
-  width: 12px;
-  height: 12px;
-  background: #fff;
-  border-radius: 50%;
-  position: absolute;
-  left: -7px; /* centers over divider line */
-  top: 1.5rem;
+/* 4) Tablet/mobile: stack vertically (≤768px) */
+@media (max-width: 768px) {
+  .page--split {
+    flex-direction: column;
+    align-items: stretch;      /* full width */
+    gap: 1rem;
+    padding: 16px;             /* simpler padding at this size */
+  }
+  .image-col img {
+    max-height: none;          /* let it size naturally when stacked */
+    width: 100%;
+  }
+  .text-col { align-items: flex-start; }
+  .text-col p { max-width: 65ch; } /* a bit wider is fine on mobile */
 }
