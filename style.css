@@ -1,4 +1,3 @@
-
 :root {
   --bg-1: #111;
   --bg-2: #222;
@@ -6,7 +5,6 @@
   --dividerW: 1px;
   --gap: clamp(24px, 4vw, 56px);
   --padX: clamp(16px, 4vw, 48px);
- 
 }
 
 html,
@@ -15,7 +13,6 @@ body {
   padding: 0;
   font-family: sans-serif;
   color: var(--fg);
-  background: var(--bg-1);
   overflow-x: hidden;
 }
 
@@ -47,7 +44,7 @@ a:hover {
 .page {
   min-height: 100vh;
   display: block;
- 
+
   background: var(--bg-1);
   color: var(--fg);
 }
@@ -60,7 +57,7 @@ a:hover {
   align-items: center;
   gap: var(--gap);
   padding: 0 var(--padX);
- 
+
   min-height: 100vh;
   position: relative;
 }
@@ -73,7 +70,7 @@ a:hover {
   display: block;
   width: 100%;
   height: auto;
- 
+
   border: 4px solid #fff;
   box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
 }
@@ -163,7 +160,7 @@ a:hover {
   min-width: 100vw;
   height: 100vh;
   flex: 0 0 100vw;
- 
+
 }
 
 
@@ -187,11 +184,11 @@ a:hover {
   --padX: var(--padX, clamp(16px, 4vw, 48px));
   display: grid;
   grid-template-columns: 1fr var(--dividerW) 1fr;
- 
+
   align-items: center;
   gap: var(--gap);
   padding: 0 var(--padX);
- 
+
   position: relative;
   min-height: 100%;
 }
@@ -260,4 +257,158 @@ a:hover {
     line-height: 1.4;
     margin-top: .75rem;
   }
+}
+
+/* --- Site background effects (fixed, behind everything) --- */
+.bgfx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #003E51;
+  /* base brand color */
+  overflow: hidden;
+  pointer-events: none;
+  /* don't steal input */
+}
+
+/* soft vignette/parallax glow */
+.bgfx__parallax {
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .05) 0%, transparent 70%);
+  transition: transform .3s ease-out;
+}
+
+/* organic film grain (coarse) */
+.bgfx__grain {
+  position: absolute;
+  inset: 0;
+  opacity: .7;
+  background-image:
+    radial-gradient(circle at 23% 34%, rgba(255, 255, 255, .20) .5px, transparent 1px),
+    radial-gradient(circle at 67% 12%, rgba(0, 0, 0, .15) .3px, transparent .8px),
+    radial-gradient(circle at 89% 78%, rgba(255, 255, 255, .10) .4px, transparent 1.2px),
+    radial-gradient(circle at 45% 91%, rgba(0, 0, 0, .12) .6px, transparent 1px),
+    radial-gradient(circle at 12% 56%, rgba(255, 255, 255, .15) .3px, transparent .9px),
+    radial-gradient(circle at 78% 45%, rgba(0, 0, 0, .08) .8px, transparent 1.5px);
+  background-size:
+    13px 17px, 19px 23px, 11px 29px, 31px 13px, 17px 19px, 23px 31px;
+  background-position:
+    0 0, 7px 11px, 13px 3px, 21px 19px, 31px 7px, 5px 23px;
+  animation: bgfx-grain-float 12s ease-in-out infinite;
+}
+
+@keyframes bgfx-grain-float {
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: .7;
+  }
+
+  25% {
+    transform: translate(-3px, -2px) rotate(.5deg);
+    opacity: .8;
+  }
+
+  50% {
+    transform: translate(2px, 3px) rotate(-.3deg);
+    opacity: .6;
+  }
+
+  75% {
+    transform: translate(-1px, -4px) rotate(.2deg);
+    opacity: .9;
+  }
+}
+
+/* fine grain overlay */
+.bgfx__texture {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(circle at 34% 67%, rgba(255, 255, 255, .05) .2px, transparent .5px),
+    radial-gradient(circle at 78% 23%, rgba(0, 0, 0, .04) .1px, transparent .3px),
+    radial-gradient(circle at 56% 89%, rgba(255, 255, 255, .03) .3px, transparent .6px),
+    radial-gradient(circle at 12% 45%, rgba(0, 0, 0, .06) .15px, transparent .4px),
+    radial-gradient(circle at 91% 12%, rgba(255, 255, 255, .04) .25px, transparent .5px);
+  background-size: 7px 11px, 5px 13px, 9px 7px, 11px 5px, 13px 9px;
+  background-position: 3px 7px, 11px 2px, 17px 13px, 23px 5px, 29px 19px;
+  animation: bgfx-fine 20s linear infinite reverse;
+}
+
+@keyframes bgfx-fine {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-1px, 1px);
+  }
+
+  40% {
+    transform: translate(1px, -.5px);
+  }
+
+  60% {
+    transform: translate(-.5px, -1px);
+  }
+
+  80% {
+    transform: translate(.5px, .5px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Hover “wake up” (desktop only) */
+@media (hover:hover) and (pointer:fine) {
+  .bgfx:hover .bgfx__grain {
+    animation-duration: 4s;
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  .bgfx:hover .bgfx__texture {
+    animation-duration: 8s;
+    opacity: .8;
+  }
+}
+
+/* Aspect/4K tweaks (optional) */
+@media screen and (min-width: 3840px) {
+  .bgfx__grain {
+    background-size: 26px 34px, 38px 46px, 22px 58px, 62px 26px, 34px 38px, 46px 62px;
+    background-position: 0 0, 14px 22px, 26px 6px, 42px 38px, 62px 14px, 10px 46px;
+  }
+
+  .bgfx__texture {
+    background-size: 14px 22px, 10px 26px, 18px 14px, 22px 10px, 26px 18px;
+  }
+}
+
+/* Respect user motion prefs */
+@media (prefers-reduced-motion: reduce) {
+
+  .bgfx__grain,
+  .bgfx__texture {
+    animation: none;
+  }
+
+  .bgfx__parallax {
+    transition: none;
+  }
+}
+
+/* IMPORTANT: let the background show through sections */
+.page,
+.horizontal-panel,
+.horizontal-section {
+  background: transparent;
 }

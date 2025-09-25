@@ -9,6 +9,15 @@
 </head>
 
 <body>
+
+  <!-- GRAIN VFX -->
+  <div class="bgfx" aria-hidden="true">
+    <div class="bgfx__parallax"></div>
+    <div class="bgfx__grain"></div>
+    <div class="bgfx__texture"></div>
+  </div>
+
+
   <!-- Vertical Scroll: Pages 1–5 -->
 
   <!-- INTRO -->
@@ -311,6 +320,33 @@
   // Init both horizontal sections
   initHorizontal("#horizontal-scroll");
   initHorizontal("#horizontal-scroll-final");
+
+  // Subtle parallax for the glow layer; safe & cheap
+  (function () {
+    const layer = document.querySelector('.bgfx__parallax');
+    if (!layer) return;
+
+    function move(x, y, scale){
+      layer.style.transform = `translate(${x}px, ${y}px) scale(${scale || 1})`;
+    }
+
+    // Mouse
+    document.addEventListener('mousemove', (e) => {
+      const mx = (e.clientX / window.innerWidth)  - 0.5; // -0.5..0.5
+      const my = (e.clientY / window.innerHeight) - 0.5;
+      move(mx * 10, my * 10);
+    });
+
+    // Touch
+    document.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      const mx = (t.clientX / window.innerWidth)  - 0.5;
+      const my = (t.clientY / window.innerHeight) - 0.5;
+      move(mx * 5, my * 5);
+    }, { passive: true });
+  })();
+
+
   </script>
 
 
