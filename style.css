@@ -1,130 +1,89 @@
+
 :root {
-    --bg-1: #111;
-    --bg-2: #222;
-    --bg-3: #333;
-    --fg: #fff;
-    --rule: #444;
+  --bg-1: #111;
+  --bg-2: #222;
+  --fg: #fff;
+  --dividerW: 1px;
+  --gap: clamp(24px, 4vw, 56px);
+  --padX: clamp(16px, 4vw, 48px);
+ 
 }
 
 html,
 body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    overflow-x: hidden;
-    background: var(--bg-1);
-    color: var(--fg);
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color: var(--fg);
+  background: var(--bg-1);
+  overflow-x: hidden;
 }
 
 h1,
 h2 {
-    font-family: 'Gill Sans MT', sans-serif;
-}
-
-h2#introchap {
-    font-family: Georgia, serif;
+  font-family: 'Gill Sans MT', sans-serif;
 }
 
 p {
-    font-family: Georgia, serif;
+  font-family: Georgia, serif;
 }
+
+a,
+.highlight {
+  font-family: 'Gill Sans MT', sans-serif;
+  font-weight: bold;
+  color: #E87722;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 5px;
+}
+
 
 .page {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: clamp(1.25rem, 4vw, 2.5rem);
-    background: var(--bg-1);
-    color: var(--fg);
+  min-height: 100vh;
+  display: block;
+ 
+  background: var(--bg-1);
+  color: var(--fg);
 }
 
 
-.horizontal-section {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-    background: var(--bg-2);
-    overscroll-behavior: none;
-}
-
-
-.horizontal-track {
-    display: flex;
-    height: 100%;
-    will-change: transform;
-}
-
-
-.horizontal-panel {
-    min-width: 100vw;
-    height: 100vh;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: clamp(1.25rem, 4vw, 2.5rem);
-    background: var(--bg-3);
-    color: var(--fg);
-}
-
-
-.horizontal-panel:nth-child(odd) {
-    background: rgba(255, 255, 255, .05);
-}
-
-.horizontal-panel:nth-child(even) {
-    background: rgba(255, 255, 255, .10);
-}
-
-
-@media (prefers-reduced-motion: reduce) {
-    .horizontal-track {
-        transition: none !important;
-    }
-}
 
 .page--split {
   display: grid;
-  grid-template-columns: 1fr auto 1fr; /* image | divider | text */
+  grid-template-columns: 1fr var(--dividerW) 1fr;
   align-items: center;
-  gap: 2rem;
-  padding: 2rem clamp(1rem, 4vw, 3rem); /* horizontal padding only */
-  position: relative; /* anchor for absolute line */
+  gap: var(--gap);
+  padding: 0 var(--padX);
+ 
   min-height: 100vh;
-  background: #213540;
-  color: #fff;
+  position: relative;
 }
 
-/* image */
+.image-col {
+  min-width: 0;
+}
+
 .image-col img {
   display: block;
-  max-width: 100%;
+  width: 100%;
   height: auto;
+ 
   border: 4px solid #fff;
-  box-shadow: 0 6px 18px rgba(0,0,0,.45);
-}
-
-/* text */
-.text-col h2 {
-  margin: 0 0 .6rem;
-  font-size: clamp(1.75rem, 5vw, 2.75rem);
-  position: relative; /* anchor for dot */
-}
-.text-col p {
-  margin: 0 0 .9rem;
-  font-size: clamp(1rem, 2.4vw, 1.15rem);
-  line-height: 1.5;
-  max-width: 50ch;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
 }
 
 .split-divider {
   position: relative;
-  width: 1px;       /* still reserves a “column” between image and text */
-  height: 105%;     /* stretch to full section height */
+  width: var(--dividerW);
+  height: 100%;
 }
 
-/* the line itself */
 .split-divider::before {
   content: "";
   position: absolute;
@@ -132,120 +91,173 @@ p {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 1px;
+  width: var(--dividerW);
   background: #fff;
 }
 
-/* dot, aligned to h2 baseline */
-.split-dot {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0.15em;  /* sits on h2 text baseline */
-  width: 12px;
-  height: 12px;
-  background: #fff;
-  border-radius: 50%;
+.text-col {
+  min-width: 0;
 }
+
+.text-col h2 {
+  margin: 0 0 .6rem;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+}
+
+.text-col p {
+  margin: 0 0 .9rem;
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  line-height: 1.5;
+  max-width: 52ch;
+}
+
 
 @media (max-width: 768px) {
   .page--split {
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
     gap: 1rem;
-    padding: 24px; /* a touch more padding around the whole section */
+    padding: 16px;
+  }
+
+  .split-divider {
+    display: none;
   }
 
   .image-col img {
-    max-height: none;
     width: 100%;
+    height: auto;
   }
 
   .text-col {
-    align-items: flex-start;
-    padding: 0 8px;        /* a little side padding just for the text block */
+    align-self: stretch;
+    padding: 0 8px;
   }
 
   .text-col h2 {
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
   }
 
   .text-col p {
-    line-height: 1.4;      /* tighter than desktop (was 1.5) */
-    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    margin-bottom: .75rem;
   }
 }
 
-/* Timeline panel layout */
-.panel--timeline {
+
+.horizontal-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-2);
+  overscroll-behavior: none;
+}
+
+.horizontal-track {
   display: flex;
-  justify-content: flex-end;   /* shove content to right */
-  align-items: stretch;
-  position: relative;
-  padding: 2rem;               /* breathing room from edges */
-  color: #fff;
+  height: 100%;
+  will-change: transform;
 }
 
-/* Timeline column: vertical line + entries */
-.timeline-col {
-  position: relative;
-  max-width: 420px;           /* constrain text width */
-  padding-left: 2rem;         /* space for the dots/line */
+.horizontal-panel {
+  min-width: 100vw;
+  height: 100vh;
+  flex: 0 0 100vw;
+ 
 }
 
-/* Vertical line */
-.timeline-line {
+
+.horizontal-panel:nth-child(odd) {
+  background: rgba(255, 255, 255, .05);
+}
+
+.horizontal-panel:nth-child(even) {
+  background: rgba(255, 255, 255, .10);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .horizontal-track {
+    transition: none !important;
+  }
+}
+
+
+.horizontal-panel.panel--split {
+  --dividerW: 1px;
+  --padX: var(--padX, clamp(16px, 4vw, 48px));
+  display: grid;
+  grid-template-columns: 1fr var(--dividerW) 1fr;
+ 
+  align-items: center;
+  gap: var(--gap);
+  padding: 0 var(--padX);
+ 
+  position: relative;
+  min-height: 100%;
+}
+
+
+.panel--split .empty-col {
+  min-width: 0;
+}
+
+
+.panel--split .split-divider {
+  position: relative;
+  width: var(--dividerW);
+  height: 100%;
+}
+
+.panel--split .split-divider::before {
+  content: "";
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   top: 0;
   bottom: 0;
-  left: 0.75rem;              /* offset inside padding-left */
-  width: 1px;
+  width: var(--dividerW);
   background: #fff;
 }
 
-/* Entries */
-.timeline-entry {
-  position: relative;
-  margin-bottom: 2.5rem;
+
+.panel--split .text-col {
+  min-width: 0;
 }
 
-.timeline-entry h2 {
-  margin: 0 0 .5rem;
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-  font-weight: 700;
-}
-
-.timeline-entry p {
-  margin: 0;
-  font-size: clamp(0.95rem, 2.4vw, 1.1rem);
-  line-height: 1.45;
-}
-
-/* Dots */
-.timeline-dot {
-  position: absolute;
-  left: -1.1rem;              /* centers dot over line */
-  top: 0.35em;                /* aligns with h2 baseline */
-  width: 12px;
-  height: 12px;
-  background: #fff;
-  border-radius: 50%;
-}
-
-/* Highlight style */
-.highlight {
-  color: #f77;                /* adjust to brand palette */
-  font-weight: 600;
+.panel--split .text-col h2 {
+  margin: 0 0 .6rem;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
   font-family: 'Gill Sans MT', sans-serif;
 }
 
-/* Responsiveness: stack text on small screens */
+.panel--split .text-col p {
+  margin: 0;
+  max-width: 52ch;
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  line-height: 1.5;
+  font-family: Georgia, serif;
+}
+
+
 @media (max-width: 768px) {
-  .panel--timeline {
-    justify-content: center;  /* center text */
+  .horizontal-panel.panel--split {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 16px;
   }
-  .timeline-col {
-    max-width: 100%;
-    padding-left: 1.5rem;
+
+  .panel--split .split-divider {
+    display: none;
+  }
+
+  .panel--split .text-col {
+    align-self: stretch;
+    padding: 0 8px;
+  }
+
+  .panel--split .text-col p {
+    line-height: 1.4;
+    margin-top: .75rem;
   }
 }
