@@ -97,10 +97,8 @@ a:hover {
 .page {
   min-height: 100vh;
   display: block;
-  /* transparent to show bgfx */
 }
 
-/* image | divider | text */
 .page--split {
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--dividerW) minmax(0, 1fr);
@@ -121,6 +119,10 @@ a:hover {
   height: auto;
   border: 2px solid #fff;
   box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
+}
+
+#small-img {
+  width: 65%;
 }
 
 .split-divider {
@@ -144,7 +146,6 @@ a:hover {
   min-width: 0;
 }
 
-/* readable measure for right column (also reused in horizontal split) */
 .text-col {
   inline-size: clamp(36ch, 42vw, 52ch);
   justify-self: start;
@@ -162,7 +163,6 @@ a:hover {
   max-width: 52ch;
 }
 
-/* --- Intro overrides --- */
 .page--intro {
   position: relative;
 }
@@ -199,7 +199,6 @@ a:hover {
   box-shadow: none;
 }
 
-/* --- Vertical responsive --- */
 @media (max-width:768px) {
   .page--intro .split-divider {
     display: none;
@@ -281,7 +280,6 @@ a:hover {
   }
 }
 
-/* --- Horizontal split variant (empty | divider | text) --- */
 .horizontal-panel.panel--split {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) var(--dividerW) minmax(0, 1fr);
@@ -318,7 +316,6 @@ a:hover {
   min-width: 0;
 }
 
-/* measure already set above */
 .panel--split .text-col h2 {
   margin: 0 0 .6rem;
   font-size: clamp(1.75rem, 5vw, 2.75rem);
@@ -331,7 +328,6 @@ a:hover {
   line-height: 1.5;
 }
 
-/* small rhythm for stacked headings */
 .panel--split .text-col h2+p {
   margin-top: .5rem;
 }
@@ -340,7 +336,6 @@ a:hover {
   margin-top: 1.5rem;
 }
 
-/* --- Horizontal "row" variant (text+year | text+year) --- */
 .horizontal-panel.panel--row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -384,7 +379,6 @@ a:hover {
   line-height: 1.1;
 }
 
-/* --- Optional "row" with images --- */
 .panel--row {
   align-items: stretch;
 }
@@ -422,7 +416,6 @@ a:hover {
   margin-top: auto;
 }
 
-/* --- Horizontal responsive --- */
 @media (max-width:768px) {
   .horizontal-panel.panel--split {
     display: flex;
@@ -491,32 +484,23 @@ a:hover {
 /* =========================================
    L-SHAPED TIMELINE (first horizontal bg panel)
 ========================================= */
-/* kill the default full-height spine on just this panel */
 .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider {
   display: none !important;
 }
 
-/* paint the L: vertical top→50%, then center→right inside padding */
 .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline::after {
   content: "";
   position: absolute;
   inset: 0;
-  /* cover the whole panel */
   z-index: 2;
   pointer-events: none;
   --lineW: 1px;
   --lineColor: #fff;
-  /* draw in the outer box so padding doesn't clip the bar */
   background-origin: padding-box;
-  /* default; ensures not content-box */
   background-clip: padding-box;
-  /* IMPORTANT: no padding here */
   padding: 0;
   background:
-    /* vertical leg: centered, from top to 50% */
     linear-gradient(var(--lineColor), var(--lineColor)) 50% 0 / var(--lineW) 70% no-repeat,
-
-    /* horizontal arm: RIGHT edge anchored at center, extend leftward 50% of panel width */
     linear-gradient(var(--lineColor), var(--lineColor)) 100% 70% / 50% var(--lineW) no-repeat
 }
 
@@ -529,20 +513,15 @@ a:hover {
 /* ================================
    HORIZONTAL 2-UP ROW — TWEAKS
    ================================ */
-
-/* make the two columns behave and stop stretching content full height */
 .horizontal-panel.panel--row {
   position: relative;
-  /* for the timeline line */
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(24px, 5vw, 64px);
   padding: 0 var(--padX);
   align-items: start;
-  /* don't stretch to equal heights */
 }
 
-/* each entry stacks image → text → year in normal flow */
 .panel--row .row-entry {
   display: flex;
   flex-direction: column;
@@ -551,7 +530,6 @@ a:hover {
   margin-left: 20%;
 }
 
-/* images: smaller cap, responsive */
 .row-figure {
   margin: 0 0 1rem;
 }
@@ -560,13 +538,11 @@ a:hover {
   display: block;
   width: 100%;
   max-width: clamp(240px, 28vw, 420px);
-  /* adjust to taste */
   height: auto;
   border: 2px solid #fff;
   box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
 }
 
-/* body copy + year */
 .panel--row .row-entry p {
   margin: 0;
   max-width: 52ch;
@@ -575,7 +551,6 @@ a:hover {
   line-height: 1.5;
 }
 
-/* no more "pin to bottom" — just a small gap */
 .panel--row .row-entry h2 {
   margin: .75rem 0 0;
   font-family: "Gill Sans MT", sans-serif;
@@ -584,8 +559,6 @@ a:hover {
   line-height: 1.1;
 }
 
-/* optional timeline line at 70% viewport height
-   -> add class "panel--Hline70" on the same panel */
 .horizontal-panel.panel--row.panel--Hline70::before {
   --lineW: 1px;
   --lineColor: #fff;
@@ -593,9 +566,7 @@ a:hover {
   position: absolute;
   left: 0;
   right: 0;
-  /* use 0/0 if you want full-bleed */
   top: 70vh;
-  /* the requested height */
   height: var(--lineW);
   background: var(--lineColor);
   opacity: .85;
@@ -603,7 +574,6 @@ a:hover {
   z-index: 2;
 }
 
-/* mobile: stack; hide the line for clarity */
 @media (max-width: 768px) {
   .horizontal-panel.panel--row {
     grid-template-columns: 1fr;
@@ -617,10 +587,60 @@ a:hover {
 }
 
 /* =========================================
+   CHAPTER 07: ELBOW TIMELINE (┘ shape at 70vh)
+========================================= */
+#chapter-07.panel--Hline70 {
+  position: relative;
+}
+
+/* disable the default full-width line */
+#chapter-07.panel--Hline70::before {
+  display: none;
+}
+
+/* horizontal half-line */
+#chapter-07.panel--Hline70::before,
+#chapter-07.panel--Hline70::after {
+  --lineW: 1px;
+  --lineColor: #fff;
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  opacity: .85;
+}
+
+/* left → midpoint (50vw) at 70vh */
+#chapter-07.panel--Hline70::before {
+  left: 0;
+  top: 70vh;
+  width: 50vw;
+  height: var(--lineW);
+  background: var(--lineColor);
+  display: block;
+}
+
+/* vertical drop from midpoint to bottom */
+#chapter-07.panel--Hline70::after {
+  left: 50vw;
+  top: 70vh;
+  width: var(--lineW);
+  height: calc(100vh - 70vh);
+  background: var(--lineColor);
+}
+
+/* mobile: hide elbow line */
+@media (max-width: 768px) {
+  #chapter-07.panel--Hline70::before,
+  #chapter-07.panel--Hline70::after {
+    display: none;
+  }
+}
+
+
+/* =========================================
    Vertical with Liftout
 ========================================= */
-
-/* Left column now stacks a liftout + a photo with the same visual language */
 .page--liftout .image-col {
   display: flex;
   flex-direction: column;
@@ -628,7 +648,6 @@ a:hover {
   align-items: flex-start;
 }
 
-/* Liftout styling mirrors the photo frame */
 .liftout{
   max-width: clamp(28ch, 40vw, 46ch);
   padding: clamp(16px, 2.5vw, 28px) clamp(20px, 3vw, 36px);
@@ -655,7 +674,6 @@ a:hover {
   color: #E87722;
 }
 
-/* Keep photo treatment consistent with the rest of the site */
 .photo { margin: 0; }
 .photo img{
   display: block;
@@ -663,10 +681,9 @@ a:hover {
   height: auto;
   border: 2px solid #fff;
   box-shadow: 0 6px 18px rgba(0,0,0,.45);
-  max-width: min(46vw, 720px); /* optional cap so it doesn’t overpower the text */
+  max-width: min(46vw, 720px);
 }
 
-/* Mobile: stacks naturally with some breathing room */
 @media (max-width: 768px){
   .page--liftout .image-col { align-items: stretch; }
   .liftout{ max-width: 100%; padding: 16px 18px; }
@@ -676,11 +693,9 @@ a:hover {
 /* =========================================
    With YT Video embed
 ========================================= */
-
-/* Video embed wrapper keeps the same photo frame look */
 .video-embed {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
   width: 100%;
@@ -694,6 +709,76 @@ a:hover {
   border: 2px solid #fff;
   box-shadow: 0 6px 18px rgba(0,0,0,.45);
 }
+
+/* =========================================
+   CHAPTER 14: BACKGROUND MOTTO
+   ("Preventing War / Shaping Peace")
+========================================= */
+#chapter-14 {
+  position: relative;
+  overflow: hidden;
+}
+
+/* keep the timeline line (::before) intact */
+
+/* add the background text on ::after */
+#chapter-14::after {
+    content: "Preventing War \A     Shaping Peace"; /* 5 spaces before 'Shaping' */
+  white-space: pre;
+  position: absolute;
+  top: clamp(16px, 5vh, 48px);
+  left: clamp(16px, 5vw, 64px);
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: clamp(2rem, 6vw, 5rem);
+  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* =========================================
+   CHAPTER 14: FINAL MESSAGE (right column)
+========================================= */
+#chapter-14.panel--row {
+  grid-template-columns: 1fr 1fr; /* two equal columns */
+  align-items: center;
+}
+
+#chapter-14 .final-message {
+  grid-column: 2; /* force into right column */
+  align-self: center;
+  padding-left: clamp(1rem, 3vw, 2rem);
+}
+
+#chapter-14 .final-message h2 {
+  font-family: "Gill Sans MT", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  line-height: 1.2;
+  color: #fff;
+  margin: 0;
+  max-width: 32ch;
+}
+
+/* =========================================
+   CHAPTER 14: FINAL MESSAGE LAYOUT FIX
+========================================= */
+#chapter-14.panel--row {
+  align-items: start; /* let each column start at top */
+}
+
+#chapter-14 .row-entry {
+  align-self: start; /* keep the image/text anchored top */
+}
+
+#chapter-14 .final-message {
+  grid-column: 2; /* right column */
+  align-self: center; /* center this block vertically */
+  padding-left: clamp(1rem, 3vw, 2rem);
+}
+
 
 
 /* =========================================
@@ -774,23 +859,19 @@ a:hover {
 }
 
 @keyframes bgfx-grain-float {
-
   0%,
   100% {
     transform: translate(0, 0) rotate(0);
     opacity: .7;
   }
-
   25% {
     transform: translate(-3px, -2px) rotate(.5deg);
     opacity: .8;
   }
-
   50% {
     transform: translate(2px, 3px) rotate(-.3deg);
     opacity: .6;
   }
-
   75% {
     transform: translate(-1px, -4px) rotate(.2deg);
     opacity: .9;
@@ -816,23 +897,18 @@ a:hover {
   0% {
     transform: translate(0, 0);
   }
-
   20% {
     transform: translate(-1px, 1px);
   }
-
   40% {
     transform: translate(1px, -.5px);
   }
-
   60% {
     transform: translate(-.5px, -1px);
   }
-
   80% {
     transform: translate(.5px, .5px);
   }
-
   100% {
     transform: translate(0, 0);
   }
@@ -863,7 +939,6 @@ a:hover {
 }
 
 @media (prefers-reduced-motion:reduce) {
-
   .bgfx__grain,
   .bgfx__texture {
     animation: none;
