@@ -779,6 +779,25 @@ a:hover {
   padding-left: clamp(1rem, 3vw, 2rem);
 }
 
+/* =========================================
+   CHAPTER 14: ALIGN SVG WITH TIMELINE LINE
+========================================= */
+#chapter-14 {
+  position: relative;
+}
+
+#chapter-14 .chapter14-svg {
+  position: absolute;
+  top: 71.35vh;;                  /* align with horizontal line */
+  left: 0;
+  width: 100%;                /* span full panel width */
+  height: auto;
+  transform: translateY(-50%); /* center vertically on the line */
+  z-index: 0;                  /* behind text */
+  pointer-events: none;
+  opacity: 0.7;               /* subtle background feel */
+}
+
 
 
 /* =========================================
