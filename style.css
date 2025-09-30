@@ -17,9 +17,7 @@
 ========================================= */
 *,
 *::before,
-*::after {
-  box-sizing: border-box;
-}
+*::after { box-sizing: border-box; }
 
 html,
 body {
@@ -30,12 +28,7 @@ body {
   overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: "Gill Sans MT", sans-serif;
   font-weight: 700;
   line-height: 1.2;
@@ -50,13 +43,8 @@ h1 {
   max-width: 22ch;
 }
 
-h2 {
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-}
-
-h3 {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-}
+h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
 
 h2#introchap {
   font-family: Georgia, serif;
@@ -68,15 +56,13 @@ h2#introchap {
   margin: 0;
 }
 
-p,
-li {
+p, li {
   font-family: Georgia, serif;
   font-size: clamp(1rem, 1.5vw, 1.125rem);
   line-height: 1.5;
 }
 
-a,
-.highlight {
+a, .highlight {
   font-family: "Gill Sans MT", sans-serif;
   font-weight: 700;
   color: #E87722;
@@ -109,9 +95,7 @@ a:hover {
   position: relative;
 }
 
-.image-col {
-  min-width: 0;
-}
+.image-col { min-width: 0; }
 
 .image-col img {
   display: block;
@@ -121,9 +105,7 @@ a:hover {
   box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
 }
 
-#small-img {
-  width: 65%;
-}
+#small-img { width: 65%; }
 
 .split-divider {
   position: relative;
@@ -144,9 +126,6 @@ a:hover {
 
 .text-col {
   min-width: 0;
-}
-
-.text-col {
   inline-size: clamp(36ch, 42vw, 52ch);
   justify-self: start;
 }
@@ -163,9 +142,7 @@ a:hover {
   max-width: 52ch;
 }
 
-.page--intro {
-  position: relative;
-}
+.page--intro { position: relative; }
 
 .page--intro .intro-circle {
   position: absolute;
@@ -181,10 +158,7 @@ a:hover {
   pointer-events: none;
 }
 
-.page--intro .split-divider::before {
-  top: 50%;
-  bottom: 0;
-}
+.page--intro .split-divider::before { top: 50%; bottom: 0; }
 
 .page--intro .intro-icon {
   display: flex;
@@ -200,17 +174,10 @@ a:hover {
 }
 
 @media (max-width:768px) {
-  .page--intro .split-divider {
-    display: none;
-  }
+  .page--intro .split-divider { display: none; }
 
-  h1 {
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
-  }
-
-  h2#introchap {
-    font-size: clamp(1.25rem, 4vw, 1.5rem);
-  }
+  h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); }
+  h2#introchap { font-size: clamp(1.25rem, 4vw, 1.5rem); }
 
   .page--split {
     display: flex;
@@ -219,28 +186,14 @@ a:hover {
     padding: 16px;
   }
 
-  .split-divider {
-    display: none;
-  }
+  .split-divider { display: none; }
 
-  .image-col img {
-    width: 100%;
-    height: auto;
-  }
+  .image-col img { width: 100%; height: auto; }
 
-  .text-col {
-    align-self: stretch;
-    padding: 0 8px;
-  }
+  .text-col { align-self: stretch; padding: 0 8px; }
 
-  .text-col h2 {
-    margin-bottom: .5rem;
-  }
-
-  .text-col p {
-    line-height: 1.4;
-    margin-bottom: .75rem;
-  }
+  .text-col h2 { margin-bottom: .5rem; }
+  .text-col p { line-height: 1.4; margin-bottom: .75rem; }
 }
 
 /* =========================================
@@ -266,18 +219,11 @@ a:hover {
   flex: 0 0 100vw;
 }
 
-.horizontal-panel:nth-child(odd) {
-  background: rgba(255, 255, 255, .05);
-}
-
-.horizontal-panel:nth-child(even) {
-  background: rgba(255, 255, 255, .10);
-}
+.horizontal-panel:nth-child(odd)  { background: rgba(255, 255, 255, .05); }
+.horizontal-panel:nth-child(even) { background: rgba(255, 255, 255, .10); }
 
 @media (prefers-reduced-motion:reduce) {
-  .horizontal-track {
-    transition: none !important;
-  }
+  .horizontal-track { transition: none !important; }
 }
 
 .horizontal-panel.panel--split {
@@ -291,9 +237,7 @@ a:hover {
   height: 100%;
 }
 
-.panel--split .empty-col {
-  min-width: 0;
-}
+.panel--split .empty-col { min-width: 0; }
 
 .panel--split .split-divider {
   position: relative;
@@ -312,9 +256,7 @@ a:hover {
   background: #fff;
 }
 
-.panel--split .text-col {
-  min-width: 0;
-}
+.panel--split .text-col { min-width: 0; }
 
 .panel--split .text-col h2 {
   margin: 0 0 .6rem;
@@ -328,13 +270,8 @@ a:hover {
   line-height: 1.5;
 }
 
-.panel--split .text-col h2+p {
-  margin-top: .5rem;
-}
-
-.panel--split .text-col p+h2 {
-  margin-top: 1.5rem;
-}
+.panel--split .text-col h2 + p { margin-top: .5rem; }
+.panel--split .text-col p + h2 { margin-top: 1.5rem; }
 
 .horizontal-panel.panel--row {
   display: grid;
@@ -345,25 +282,10 @@ a:hover {
   padding: 0 var(--padX);
 }
 
-.horizontal-panel.panel--row>p:nth-of-type(1) {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.horizontal-panel.panel--row>h2:nth-of-type(1) {
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.horizontal-panel.panel--row>p:nth-of-type(2) {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.horizontal-panel.panel--row>h2:nth-of-type(2) {
-  grid-column: 2;
-  grid-row: 2;
-}
+.horizontal-panel.panel--row > p:nth-of-type(1)  { grid-column: 1; grid-row: 1; }
+.horizontal-panel.panel--row > h2:nth-of-type(1) { grid-column: 1; grid-row: 2; }
+.horizontal-panel.panel--row > p:nth-of-type(2)  { grid-column: 2; grid-row: 1; }
+.horizontal-panel.panel--row > h2:nth-of-type(2) { grid-column: 2; grid-row: 2; }
 
 .horizontal-panel.panel--row p {
   margin: 0;
@@ -379,9 +301,7 @@ a:hover {
   line-height: 1.1;
 }
 
-.panel--row {
-  align-items: stretch;
-}
+.panel--row { align-items: stretch; }
 
 .panel--row .row-entry {
   display: flex;
@@ -389,9 +309,7 @@ a:hover {
   height: 100%;
 }
 
-.row-figure {
-  margin: 0 0 1rem;
-}
+.row-figure { margin: 0 0 1rem; }
 
 .row-figure img {
   display: block;
@@ -424,19 +342,11 @@ a:hover {
     padding: 16px;
   }
 
-  .panel--split .split-divider {
-    display: none;
-  }
+  .panel--split .split-divider { display: none; }
 
-  .panel--split .text-col {
-    align-self: stretch;
-    padding: 0 8px;
-  }
+  .panel--split .text-col { align-self: stretch; padding: 0 8px; }
 
-  .panel--split .text-col p {
-    line-height: 1.4;
-    margin-top: .75rem;
-  }
+  .panel--split .text-col p { line-height: 1.4; margin-top: .75rem; }
 
   .horizontal-panel.panel--row {
     grid-template-columns: 1fr;
@@ -444,14 +354,9 @@ a:hover {
     padding: 16px;
   }
 
-  .horizontal-panel.panel--row>* {
-    grid-column: 1;
-    grid-row: auto;
-  }
+  .horizontal-panel.panel--row > * { grid-column: 1; grid-row: auto; }
 
-  .panel--row .row-entry {
-    height: auto;
-  }
+  .panel--row .row-entry { height: auto; }
 }
 
 /* =========================================
@@ -476,7 +381,7 @@ a:hover {
   z-index: 0;
 }
 
-.horizontal-panel.panel--split.panel--bgimg>* {
+.horizontal-panel.panel--split.panel--bgimg > * {
   position: relative;
   z-index: 1;
 }
@@ -501,13 +406,11 @@ a:hover {
   padding: 0;
   background:
     linear-gradient(var(--lineColor), var(--lineColor)) 50% 0 / var(--lineW) 70% no-repeat,
-    linear-gradient(var(--lineColor), var(--lineColor)) 100% 70% / 50% var(--lineW) no-repeat
+    linear-gradient(var(--lineColor), var(--lineColor)) 100% 70% / 50% var(--lineW) no-repeat;
 }
 
 @media (max-width:768px) {
-  .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline::after {
-    display: none;
-  }
+  .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline::after { display: none; }
 }
 
 /* ================================
@@ -530,9 +433,48 @@ a:hover {
   margin-left: 20%;
 }
 
-.row-figure {
-  margin: 0 0 1rem;
+.panel--row .row-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  /* responsive offsets */
+  margin-top: clamp(0px, 12svh, 25%);
+  margin-left: clamp(0px, 6vw, 20%);
 }
+
+/* If you adopted the --timelineY var earlier, you can tie the top offset to it: */
+/*
+.panel--row .row-entry {
+  margin-top: clamp(0px, calc(var(--timelineY) - 58svh), 25%);
+  margin-left: clamp(0px, 6vw, 20%);
+}
+*/
+
+/* Tighten further on short laptop heights */
+@media (max-height: 900px) {
+  .panel--row .row-entry {
+    margin-top: 10svh;
+    margin-left: 5vw;
+  }
+}
+
+@media (max-height: 780px) {
+  .panel--row .row-entry {
+    margin-top: 6svh;
+    margin-left: 4vw;
+  }
+}
+
+/* Mobile stack already collapses to 1 column—zero the offsets there */
+@media (max-width: 768px) {
+  .panel--row .row-entry {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
+
+.row-figure { margin: 0 0 1rem; }
 
 .row-figure img {
   display: block;
@@ -581,24 +523,16 @@ a:hover {
     padding: 16px;
   }
 
-  .horizontal-panel.panel--row.panel--Hline70::before {
-    display: none;
-  }
+  .horizontal-panel.panel--row.panel--Hline70::before { display: none; }
 }
 
 /* =========================================
    CHAPTER 07: ELBOW TIMELINE (┘ shape at 70vh)
 ========================================= */
-#chapter-07.panel--Hline70 {
-  position: relative;
-}
+#chapter-07.panel--Hline70 { position: relative; }
 
-/* disable the default full-width line */
-#chapter-07.panel--Hline70::before {
-  display: none;
-}
+#chapter-07.panel--Hline70::before { display: none; }
 
-/* horizontal half-line */
 #chapter-07.panel--Hline70::before,
 #chapter-07.panel--Hline70::after {
   --lineW: 1px;
@@ -610,7 +544,6 @@ a:hover {
   opacity: .85;
 }
 
-/* left → midpoint (50vw) at 70vh */
 #chapter-07.panel--Hline70::before {
   left: 0;
   top: 70vh;
@@ -620,7 +553,6 @@ a:hover {
   display: block;
 }
 
-/* vertical drop from midpoint to bottom */
 #chapter-07.panel--Hline70::after {
   left: 50vw;
   top: 70vh;
@@ -629,14 +561,10 @@ a:hover {
   background: var(--lineColor);
 }
 
-/* mobile: hide elbow line */
 @media (max-width: 768px) {
   #chapter-07.panel--Hline70::before,
-  #chapter-07.panel--Hline70::after {
-    display: none;
-  }
+  #chapter-07.panel--Hline70::after { display: none; }
 }
-
 
 /* =========================================
    Vertical with Liftout
@@ -648,7 +576,7 @@ a:hover {
   align-items: flex-start;
 }
 
-.liftout{
+.liftout {
   max-width: clamp(28ch, 40vw, 46ch);
   padding: clamp(16px, 2.5vw, 28px) clamp(20px, 3vw, 36px);
   background: rgba(0,0,0,.6);
@@ -661,11 +589,9 @@ a:hover {
   line-height: 1.45;
 }
 
-.liftout p {
-  font-size: 1.75rem;
-}
+.liftout p { font-size: 1.75rem; }
 
-.liftout footer{
+.liftout footer {
   margin-top: .75rem;
   font-family: "Gill Sans MT", sans-serif;
   font-weight: 700;
@@ -675,7 +601,8 @@ a:hover {
 }
 
 .photo { margin: 0; }
-.photo img{
+
+.photo img {
   display: block;
   width: 100%;
   height: auto;
@@ -684,10 +611,10 @@ a:hover {
   max-width: min(46vw, 720px);
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
   .page--liftout .image-col { align-items: stretch; }
-  .liftout{ max-width: 100%; padding: 16px 18px; }
-  .photo img{ max-width: 100%; }
+  .liftout { max-width: 100%; padding: 16px 18px; }
+  .photo img { max-width: 100%; }
 }
 
 /* =========================================
@@ -719,11 +646,8 @@ a:hover {
   overflow: hidden;
 }
 
-/* keep the timeline line (::before) intact */
-
-/* add the background text on ::after */
 #chapter-14::after {
-    content: "Preventing War \A     Shaping Peace"; /* 5 spaces before 'Shaping' */
+  content: "Preventing War \A     Shaping Peace";
   white-space: pre;
   position: absolute;
   top: clamp(16px, 5vh, 48px);
@@ -742,12 +666,14 @@ a:hover {
    CHAPTER 14: FINAL MESSAGE (right column)
 ========================================= */
 #chapter-14.panel--row {
-  grid-template-columns: 1fr 1fr; /* two equal columns */
-  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
 }
 
+#chapter-14 .row-entry { align-self: start; }
+
 #chapter-14 .final-message {
-  grid-column: 2; /* force into right column */
+  grid-column: 2;
   align-self: center;
   padding-left: clamp(1rem, 3vw, 2rem);
 }
@@ -763,41 +689,19 @@ a:hover {
 }
 
 /* =========================================
-   CHAPTER 14: FINAL MESSAGE LAYOUT FIX
-========================================= */
-#chapter-14.panel--row {
-  align-items: start; /* let each column start at top */
-}
-
-#chapter-14 .row-entry {
-  align-self: start; /* keep the image/text anchored top */
-}
-
-#chapter-14 .final-message {
-  grid-column: 2; /* right column */
-  align-self: center; /* center this block vertically */
-  padding-left: clamp(1rem, 3vw, 2rem);
-}
-
-/* =========================================
    CHAPTER 14: ALIGN SVG WITH TIMELINE LINE
 ========================================= */
-#chapter-14 {
-  position: relative;
-}
-
 #chapter-14 .chapter14-svg {
   position: absolute;
-  top: 71.35vh;;                  /* align with horizontal line */
+  top: 70vh;
   left: 0;
-  width: 100%;                /* span full panel width */
+  width: 100%;
   height: auto;
-  transform: translateY(-50%); /* center vertically on the line */
-  z-index: 0;                  /* behind text */
+  transform: translateY(-50%);
+  z-index: 0;
   pointer-events: none;
-  opacity: 0.7;               /* subtle background feel */
+  opacity: 0.7;
 }
-
 
 /* =========================================
    PER-FRAME OVERLAYS (transparent)
@@ -877,23 +781,10 @@ a:hover {
 }
 
 @keyframes bgfx-grain-float {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0);
-    opacity: .7;
-  }
-  25% {
-    transform: translate(-3px, -2px) rotate(.5deg);
-    opacity: .8;
-  }
-  50% {
-    transform: translate(2px, 3px) rotate(-.3deg);
-    opacity: .6;
-  }
-  75% {
-    transform: translate(-1px, -4px) rotate(.2deg);
-    opacity: .9;
-  }
+  0%, 100% { transform: translate(0, 0) rotate(0); opacity: .7; }
+  25% { transform: translate(-3px, -2px) rotate(.5deg); opacity: .8; }
+  50% { transform: translate(2px, 3px) rotate(-.3deg); opacity: .6; }
+  75% { transform: translate(-1px, -4px) rotate(.2deg); opacity: .9; }
 }
 
 .bgfx__texture {
@@ -912,37 +803,17 @@ a:hover {
 }
 
 @keyframes bgfx-fine {
-  0% {
-    transform: translate(0, 0);
-  }
-  20% {
-    transform: translate(-1px, 1px);
-  }
-  40% {
-    transform: translate(1px, -.5px);
-  }
-  60% {
-    transform: translate(-.5px, -1px);
-  }
-  80% {
-    transform: translate(.5px, .5px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-1px, 1px); }
+  40%  { transform: translate(1px, -.5px); }
+  60%  { transform: translate(-.5px, -1px); }
+  80%  { transform: translate(.5px, .5px); }
+  100% { transform: translate(0, 0); }
 }
 
 @media (hover:hover) and (pointer:fine) {
-  .bgfx:hover .bgfx__grain {
-    animation-duration: 4s;
-    opacity: 1;
-    transform: scale(1.02);
-  }
-
-  .bgfx:hover .bgfx__texture {
-    animation-duration: 8s;
-    opacity: .8;
-  }
+  .bgfx:hover .bgfx__grain { animation-duration: 4s; opacity: 1; transform: scale(1.02); }
+  .bgfx:hover .bgfx__texture { animation-duration: 8s; opacity: .8; }
 }
 
 @media (min-width:3840px) {
@@ -950,26 +821,44 @@ a:hover {
     background-size: 26px 34px, 38px 46px, 22px 58px, 62px 26px, 34px 38px, 46px 62px;
     background-position: 0 0, 14px 22px, 26px 6px, 42px 38px, 62px 14px, 10px 46px;
   }
-
   .bgfx__texture {
     background-size: 14px 22px, 10px 26px, 18px 14px, 22px 10px, 26px 18px;
   }
 }
 
 @media (prefers-reduced-motion:reduce) {
-  .bgfx__grain,
-  .bgfx__texture {
-    animation: none;
-  }
-
-  .bgfx__parallax {
-    transition: none;
-  }
+  .bgfx__grain, .bgfx__texture { animation: none; }
+  .bgfx__parallax { transition: none; }
 }
 
-/* Ensure sections/panels stay transparent over bgfx */
+/* =========================================
+   TRANSPARENCY OVER GLOBAL BGFX
+========================================= */
 .page,
 .horizontal-panel,
-.horizontal-section {
-  background: transparent;
+.horizontal-section { background: transparent; }
+
+/* =========================================
+   TIMELINE: RESPONSIVE Y POSITION
+   - Default uses small-viewport height (svh)
+   - Falls back to at least 560px from the top on short screens
+========================================= */
+:root { --timelineY: 70svh; } /* default */
+
+.horizontal-panel.panel--row.panel--Hline70::before {
+  top: max(var(--timelineY), 560px);
 }
+
+/* Elbow panel (Chapter 07) uses the same var */
+#chapter-07.panel--Hline70::before { top: max(var(--timelineY), 560px); }
+#chapter-07.panel--Hline70::after  { top: max(var(--timelineY), 560px); }
+
+/* Chapter 14 SVG alignment uses the same var */
+#chapter-14 .chapter14-svg {
+  top: max(var(--timelineY), 560px);
+}
+
+/* Optional: nudge the line LOWER on short viewports */
+@media (max-height: 900px)  { :root { --timelineY: 74svh; } }
+@media (max-height: 820px)  { :root { --timelineY: 78svh; } }
+@media (max-height: 740px)  { :root { --timelineY: 82svh; } }
