@@ -119,7 +119,6 @@ a:hover {
   top: 0;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
   width: var(--dividerW);
   background: #fff;
 }
@@ -388,30 +387,95 @@ a:hover {
 
 /* =========================================
    L-SHAPED TIMELINE (first horizontal bg panel)
+   Align vertical leg to the same 50% centerline used
+   by vertical .page--split .split-divider
 ========================================= */
-.horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider {
-  display: none !important;
+:root { --timelineY: 70svh; } /* or keep your earlier responsive var */
+
+/* Shared for any horizontal L-timeline panel */
+.horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline {
+  --lineW: 1px;
+  --lineColor: #fff;
+  --L-y: max(var(--timelineY, 70svh), 560px); /* same Y as your other timeline lines */
+  position: relative;
 }
 
+/* Use the real divider for the vertical leg (perfect alignment) */
+.horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider {
+  display: block !important; /* ensure it's not hidden */
+}
+.horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider::before {
+  top: 0;
+  bottom: auto;          /* override default bottom:0 */
+  height: var(--L-y);    /* leg stops at elbow */
+}
+
+/* Horizontal arm starts at the divider’s exact pixel center (set via JS) */
 .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2;
   pointer-events: none;
-  --lineW: 1px;
-  --lineColor: #fff;
-  background-origin: padding-box;
-  background-clip: padding-box;
-  padding: 0;
+  z-index: 2;
   background:
-    linear-gradient(var(--lineColor), var(--lineColor)) 50% 0 / var(--lineW) 70% no-repeat,
-    linear-gradient(var(--lineColor), var(--lineColor)) 100% 70% / 50% var(--lineW) no-repeat;
+    linear-gradient(var(--lineColor), var(--lineColor))
+      var(--split-x-px, 50%) var(--L-y) /
+      calc(100% - var(--split-x-px, 50%)) var(--lineW)
+      no-repeat;
 }
 
-@media (max-width:768px) {
+/* Optional: hide the L on small screens */
+@media (max-width: 768px) {
+  .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider::before,
   .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline::after { display: none; }
 }
+
+/* CHAPTER 04: force the visual spine to 50% regardless of grid ratio */
+#chapter-04.panel--Ltimeline {
+  position: relative;
+  --lineW: 1px;
+  --lineColor: #fff;
+  --L-y: max(var(--timelineY, 70svh), 560px); /* same Y logic you use elsewhere */
+}
+
+/* Hide the grid's own divider (it's at ~55.556%) */
+#chapter-04.panel--Ltimeline .split-divider { display: none !important; }
+
+/* Vertical leg: centered at 50% so it continues the vertical page’s spine */
+#chapter-04.panel--Ltimeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);     /* center the 1px bar on 50% */
+  width: var(--lineW);
+  height: var(--L-y);
+  background: var(--lineColor);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Horizontal arm: from that 50% elbow to the right edge */
+#chapter-04.panel--Ltimeline::after {
+  content: "";
+  position: absolute;
+  top: var(--L-y);
+  left: 50%;
+  right: 0;                         /* draw across to right edge */
+  height: var(--lineW);
+  background: var(--lineColor);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Optional: hide the L on small screens */
+@media (max-width: 768px) {
+  #chapter-04.panel--Ltimeline::before,
+  #chapter-04.panel--Ltimeline::after { display: none; }
+}
+
+
+
 
 /* ================================
    HORIZONTAL 2-UP ROW — TWEAKS
@@ -712,8 +776,8 @@ a:hover {
   --grad-bottom: #000;
   --overlay-alpha: .6;
   background: linear-gradient(to bottom,
-      color-mix(in srgb, var(--grad-top) calc(var(--overlay-alpha)*100%), transparent),
-      color-mix(in srgb, var(--grad-bottom) calc(var(--overlay-alpha)*100%), transparent));
+ color-mix(in srgb, var(--grad-top) calc(var(--overlay-alpha) * 30%), transparent),
+ color-mix(in srgb, var(--grad-bottom) calc(var(--overlay-alpha) * 100%), transparent));
 }
 
 .page.frame--black,
@@ -862,3 +926,4 @@ a:hover {
 @media (max-height: 900px)  { :root { --timelineY: 74svh; } }
 @media (max-height: 820px)  { :root { --timelineY: 78svh; } }
 @media (max-height: 740px)  { :root { --timelineY: 82svh; } }
+

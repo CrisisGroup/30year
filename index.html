@@ -452,6 +452,40 @@
     })();
   </script>
 
+  <script>
+(function () {
+  function initLTiles() {
+    document.querySelectorAll('.horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline')
+      .forEach(panel => {
+        const divider = panel.querySelector('.split-divider');
+        if (!divider) return;
+
+        function updateSplitX() {
+          const pr = panel.getBoundingClientRect();
+          const dr = divider.getBoundingClientRect();
+          const centerPx = (dr.left + dr.width / 2) - pr.left;
+          panel.style.setProperty('--split-x-px', centerPx + 'px');
+        }
+
+        updateSplitX();
+        window.addEventListener('resize', updateSplitX);
+        window.addEventListener('load', updateSplitX);
+        if (window.ScrollTrigger) {
+          ScrollTrigger.addEventListener('refresh', updateSplitX);
+        }
+      });
+  }
+
+  // Run now (in case this script is after the markup)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLTiles);
+  } else {
+    initLTiles();
+  }
+})();
+</script>
+
+
 </body>
 
 </html>
