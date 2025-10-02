@@ -110,6 +110,8 @@ a:hover {
 
 #small-img { width: 50%; }
 
+#med-img { width: 70%; }
+
 .split-divider {
   position: relative;
   width: var(--dividerW);
@@ -159,6 +161,101 @@ a:hover {
   z-index: 0;
   pointer-events: none;
 }
+
+/* Reverse-C square (no fill), anchored left; works on pages or horizontal panels */
+.frame--revC-left {
+  position: relative; /* containing block for ::after */
+  --sq-size: clamp(400px, 40vw, 826px);   /* mirrors intro circle sizing */
+  --sq-top: clamp(16px, 10vh, 120px);
+  --sq-overhang: 10vw;                    /* how far to push off the left */
+  --sq-stroke: 60px;
+  --sq-color: #fff;
+}
+
+/* Draw above panel ::before art, behind content */
+.frame--revC-left::after {
+  content: "";
+  position: absolute;
+  top: var(--sq-top);
+  left: calc(0px - var(--sq-overhang));   /* push off the left edge */
+  width: var(--sq-size);
+  height: var(--sq-size);
+  /* reverse-C: show top, right, bottom; hide left */
+  background: transparent;
+  border-style: solid;
+  border-width: var(--sq-stroke);
+  border-color: var(--sq-color);
+  border-left-color: transparent;
+  mix-blend-mode: color-burn;             /* same vibe as your circle */
+  z-index: 0;                             /* below .panel content (z:1), above ::before */
+  pointer-events: none;
+  opacity: .4;
+}
+
+/* Optional: hide on small screens */
+@media (max-width: 768px) {
+  .frame--revC-left::after { display: none; }
+}
+
+/* Half-disc emerging from the bottom edge (top half visible) */
+.frame--half-disc-bottom {
+  position: relative; /* containing block for ::after */
+
+  /* styling */
+  --disc-fill: #000;
+  --disc-size: 100vw;
+  --frame-pad-left: 0px;
+  --frame-pad-bottom: 0px;
+  --disc-left: 0px;
+}
+
+.frame--half-disc-bottom::after {
+  content: "";
+  position: absolute;
+
+  /* center of the circle on the bottom border of the FRAME (not content) */
+  top:  calc(100% - var(--frame-pad-bottom) - (var(--disc-size) / 2));
+  left: calc(var(--disc-left) - var(--frame-pad-left));
+  width:  var(--disc-size);
+  height: var(--disc-size);
+  background: var(--disc-fill);
+  border: var(--disc-stroke);
+  opacity: .2;
+  border-radius: 70%;
+  z-index: -1;                 /* above panel ::before art, below content */
+  pointer-events: none;
+
+  /* only show the TOP HALF inside the frame */
+  clip-path: inset(0 0 50% 0);
+}
+
+/* Tell the class how much padding to cancel in each layout */
+.page--split.frame--half-disc-bottom,
+.horizontal-panel.panel--split.frame--half-disc-bottom,
+.horizontal-panel.panel--row.frame--half-disc-bottom {
+  --frame-pad-left: var(--padX);
+}
+
+.horizontal-panel.panel--split.panel--baseline.frame--half-disc-bottom {
+  --frame-pad-bottom: calc((100vh - var(--timelineY, 70svh)) + var(--baseline-gap, 16px));
+}
+
+/* Mobile: containers use 16px pad; baseline turns off → just cancel 16px */
+@media (max-width: 768px) {
+  .page--split.frame--half-disc-bottom,
+  .horizontal-panel.panel--split.frame--half-disc-bottom,
+  .horizontal-panel.panel--row.frame--half-disc-bottom {
+    --frame-pad-left: 16px;
+  }
+  .horizontal-panel.panel--row.panel--baseline.frame--half-disc-bottom,
+  .horizontal-panel.panel--split.panel--baseline.frame--half-disc-bottom {
+    --frame-pad-bottom: 16px;
+  }
+
+  /* Hide the decoration on small screens if you want parity with the circle */
+  .frame--half-disc-bottom::after { display: none; }
+}
+
 
 .page--intro .split-divider::before { top: 50%; bottom: 0; }
 
