@@ -149,9 +149,12 @@
     <div class="horizontal-track">
 
       <div id="chapter-04"
-        class="horizontal-panel panel--split panel--bgimg frame--gradient panel--Ltimeline panel--baseline">
+        class="horizontal-panel panel--split panel--bgimg frame--gradient panel--baseline">
+        <figure class="split-col image-col">
+          <img src="images/2019.jpg" id="small-img" alt="Crisis Group team at work, 2019" loading="lazy" />
+        </figure>
         <div class="split-col empty-col" aria-hidden="true"></div>
-        <div class="split-divider" aria-hidden="true"></div>
+        
         <div class="split-col text-col">
           <h2>1997–1999</h2>
           <p>Crisis Group relocates headquarters to Brussels.
@@ -207,7 +210,7 @@
         </article>
       </div>
 
-      <div id="chapter-07" class="horizontal-panel panel--row panel--Hline70 frame--gradient panel--baseline">
+      <div id="chapter-07" class="horizontal-panel panel--row frame--gradient panel--baseline">
         <article class="row-entry">
           <figure class="row-figure">
             <img src="images/2009.webp" alt="Louise Arbour, former UN High Commissioner for Human Rights"
@@ -312,11 +315,11 @@
     <div class="horizontal-track">
 
       <div id="chapter-11"
-        class="horizontal-panel panel--split panel--bgimg frame--black panel--Ltimeline panel--baseline">
+        class="horizontal-panel panel--split panel--bgimg frame--black panel--baseline">
         <figure class="split-col image-col">
           <img src="images/2019.jpg" id="small-img" alt="Crisis Group team at work, 2019" loading="lazy" />
         </figure>
-        <div class="split-divider" aria-hidden="true"></div>
+       
         <div class="split-col text-col">
           <h2>2019</h2>
           <p>New Future of Conflict program analyses intersection between conflict, economics, climate and technology.
@@ -386,48 +389,50 @@
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
   <script>
-    gsap.registerPlugin(ScrollTrigger);
-    ScrollTrigger.getAll().forEach(t => t.kill());
-    document.documentElement.style.scrollBehavior = 'auto';
+    gsap.registerPlugin(ScrollTrigger, ModifiersPlugin);
 
-    function initHorizontal(id) {
-      const section = document.querySelector(id);
-      if (!section) return;
-      const track = section.querySelector(".horizontal-track");
-      if (!track) return;
-      const getDist = () => Math.max(0, track.scrollWidth - section.clientWidth);
-      gsap.to(track, {
-        x: () => -getDist(),
-        ease: "none",
-        scrollTrigger: {
-          id: `horiz-${id.replace('#', '')}`,
-          trigger: section,
-          start: "top top",
-          end: () => "+=" + getDist(),
-          scrub: true,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true
-        }
-      });
+function initHorizontal(id) {
+  const section = document.querySelector(id);
+  if (!section) return;
+  const track = section.querySelector(".horizontal-track");
+  if (!track) return;
+
+  // Force viewport width so the pinned section's center == viewport center
+  // (prevents small shifts from scrollbar metrics)
+  section.style.width = '100vw';
+
+  const getDist = () =>
+    Math.round(Math.max(0, track.scrollWidth - section.clientWidth)); // <— round
+
+  // Avoid GPU half-pixel jitter
+  gsap.set(track, { x: 0, force3D: false, willChange: 'transform' });
+
+  const tween = gsap.to(track, {
+    x: () => -getDist(),
+    ease: "none",
+    force3D: false,
+    // hard-round the transform so we only land on whole pixels
+    modifiers: {
+      x: v => Math.round(parseFloat(v)) + "px"
+    },
+    scrollTrigger: {
+      id: `horiz-${id.replace('#', '')}`,
+      trigger: section,
+      start: "top top",
+      end: () => "+=" + getDist(),
+      scrub: true,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+      // pinSpacing: true (default) is fine; it doesn't affect horizontal center
     }
-    initHorizontal("#horizontal-scroll");
-    initHorizontal("#horizontal-scroll-final");
+  });
 
-    (function () {
-      const layer = document.querySelector('.bgfx__parallax');
-      if (!layer) return;
-      function move(x, y, scale) {
-        layer.style.transform = `translate(${x}px, ${y}px) scale(${scale || 1})`;
-      }
-      document.addEventListener('mousemove', e => {
-        move((e.clientX / window.innerWidth - 0.5) * 10, (e.clientY / window.innerHeight - 0.5) * 10);
-      });
-      document.addEventListener('touchmove', e => {
-        const t = e.touches[0];
-        move((t.clientX / window.innerWidth - 0.5) * 5, (t.clientY / window.innerHeight - 0.5) * 5);
-      }, { passive: true });
-    })();
+  ScrollTrigger.addEventListener("refresh", () => tween.invalidate());
+}
+initHorizontal("#horizontal-scroll");
+initHorizontal("#horizontal-scroll-final");
+
   </script>
 
 </body>

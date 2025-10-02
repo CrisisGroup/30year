@@ -389,94 +389,8 @@ a:hover {
 }
 
 /* =========================================
-   L-SHAPED TIMELINE (first horizontal bg panel)
-   Align vertical leg to the same 50% centerline used
-   by vertical .page--split .split-divider
-========================================= */
-.horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline {
-  --lineW: 1px;
-  --lineColor: #fff;
-  --L-y: max(var(--timelineY, 70svh), 560px);
-  position: relative;
-}
-
-/* Use the real divider for the vertical leg (perfect alignment) */
-.horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider {
-  display: block !important;
-}
-.horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider::before {
-  top: 0;
-  bottom: auto;
-  height: var(--L-y);
-}
-
-/* Horizontal arm starts at the divider’s exact pixel center (set via JS) */
-.horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  background:
-    linear-gradient(var(--lineColor), var(--lineColor))
-      var(--split-x-px, 50%) var(--L-y) /
-      calc(100% - var(--split-x-px, 50%)) var(--lineW)
-      no-repeat;
-}
-
-/* Optional: hide the L on small screens */
-@media (max-width: 768px) {
-  .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider::before,
-  .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline::after { display: none; }
-}
-
-/* CHAPTER 04: force the visual spine to 50% regardless of grid ratio */
-#chapter-04.panel--Ltimeline {
-  position: relative;
-  --lineW: 1px;
-  --lineColor: #fff;
-  --L-y: max(var(--timelineY, 70svh), 560px);
-}
-
-/* Hide the grid's own divider (it's at ~55.556%) */
-#chapter-04.panel--Ltimeline .split-divider { display: none !important; }
-
-/* Vertical leg: centered at 50% so it continues the vertical page’s spine */
-#chapter-04.panel--Ltimeline::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 49.75%;
-  transform: translateX(-50%);
-  width: var(--lineW);
-  height: var(--L-y);
-  background: var(--lineColor);
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* Horizontal arm: from that 50% elbow to the right edge */
-#chapter-04.panel--Ltimeline::after {
-  content: "";
-  position: absolute;
-  top: var(--L-y);
-  left: 50%;
-  right: 0;
-  height: var(--lineW);
-  background: var(--lineColor);
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* Optional: hide the L on small screens */
-@media (max-width: 768px) {
-  #chapter-04.panel--Ltimeline::before,
-  #chapter-04.panel--Ltimeline::after { display: none; }
-}
-
-/* ================================
    HORIZONTAL 2-UP ROW — TWEAKS
-   ================================ */
+========================================= */
 .horizontal-panel.panel--row {
   position: relative;
   display: grid;
@@ -585,23 +499,6 @@ a:hover {
   pointer-events: none;
   z-index: 2;
   opacity: .85;
-}
-
-#chapter-07.panel--Hline70::before {
-  left: 0;
-  top: 70vh;
-  width: 50vw;
-  height: var(--lineW);
-  background: var(--lineColor);
-  display: block;
-}
-
-#chapter-07.panel--Hline70::after {
-  left: 50vw;
-  top: 70vh;
-  width: var(--lineW);
-  height: calc(100vh - 70vh);
-  background: var(--lineColor);
 }
 
 @media (max-width: 768px) {
@@ -744,11 +641,6 @@ a:hover {
   pointer-events: none;
   opacity: 0.7;
 }
-
-/* =========================================
-   HORIZONTAL ROW BASELINE ALIGNMENT
-   (Removed; consolidated in "ROW BASELINE" section)
-========================================= */
 
 /* =========================================
    PER-FRAME OVERLAYS (transparent)
@@ -958,7 +850,7 @@ a:hover {
 }
 
 /* =========================================
-   BASELINE FOR HORIZONTAL SPLIT (L frames)
+   BASELINE FOR HORIZONTAL SPLIT
 ========================================= */
 .horizontal-panel.panel--split.panel--baseline {
   --baseline-gap: 16px;
