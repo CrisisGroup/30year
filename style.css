@@ -105,7 +105,7 @@ a:hover {
   box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
 }
 
-#small-img { width: 65%; }
+#small-img { width: 50%; }
 
 .split-divider {
   position: relative;
@@ -227,7 +227,7 @@ a:hover {
 
 .horizontal-panel.panel--split {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) var(--dividerW) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) var(--dividerW) minmax(0, 1fr);
   align-items: center;
   gap: var(--gap);
   padding: 0 var(--padX);
@@ -390,24 +390,21 @@ a:hover {
    Align vertical leg to the same 50% centerline used
    by vertical .page--split .split-divider
 ========================================= */
-:root { --timelineY: 70svh; } /* or keep your earlier responsive var */
-
-/* Shared for any horizontal L-timeline panel */
 .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline {
   --lineW: 1px;
   --lineColor: #fff;
-  --L-y: max(var(--timelineY, 70svh), 560px); /* same Y as your other timeline lines */
+  --L-y: max(var(--timelineY, 70svh), 560px);
   position: relative;
 }
 
 /* Use the real divider for the vertical leg (perfect alignment) */
 .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider {
-  display: block !important; /* ensure it's not hidden */
+  display: block !important;
 }
 .horizontal-panel.panel--split.panel--bgimg.panel--Ltimeline .split-divider::before {
   top: 0;
-  bottom: auto;          /* override default bottom:0 */
-  height: var(--L-y);    /* leg stops at elbow */
+  bottom: auto;
+  height: var(--L-y);
 }
 
 /* Horizontal arm starts at the divider’s exact pixel center (set via JS) */
@@ -435,7 +432,7 @@ a:hover {
   position: relative;
   --lineW: 1px;
   --lineColor: #fff;
-  --L-y: max(var(--timelineY, 70svh), 560px); /* same Y logic you use elsewhere */
+  --L-y: max(var(--timelineY, 70svh), 560px);
 }
 
 /* Hide the grid's own divider (it's at ~55.556%) */
@@ -447,7 +444,7 @@ a:hover {
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translateX(-50%);     /* center the 1px bar on 50% */
+  transform: translateX(-50%);
   width: var(--lineW);
   height: var(--L-y);
   background: var(--lineColor);
@@ -461,7 +458,7 @@ a:hover {
   position: absolute;
   top: var(--L-y);
   left: 50%;
-  right: 0;                         /* draw across to right edge */
+  right: 0;
   height: var(--lineW);
   background: var(--lineColor);
   pointer-events: none;
@@ -473,9 +470,6 @@ a:hover {
   #chapter-04.panel--Ltimeline::before,
   #chapter-04.panel--Ltimeline::after { display: none; }
 }
-
-
-
 
 /* ================================
    HORIZONTAL 2-UP ROW — TWEAKS
@@ -493,27 +487,11 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 25%;
-  margin-left: 20%;
-}
-
-.panel--row .row-entry {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 
   /* responsive offsets */
   margin-top: clamp(0px, 12svh, 25%);
   margin-left: clamp(0px, 6vw, 20%);
 }
-
-/* If you adopted the --timelineY var earlier, you can tie the top offset to it: */
-/*
-.panel--row .row-entry {
-  margin-top: clamp(0px, calc(var(--timelineY) - 58svh), 25%);
-  margin-left: clamp(0px, 6vw, 20%);
-}
-*/
 
 /* Tighten further on short laptop heights */
 @media (max-height: 900px) {
@@ -594,8 +572,6 @@ a:hover {
    CHAPTER 07: ELBOW TIMELINE (┘ shape at 70vh)
 ========================================= */
 #chapter-07.panel--Hline70 { position: relative; }
-
-#chapter-07.panel--Hline70::before { display: none; }
 
 #chapter-07.panel--Hline70::before,
 #chapter-07.panel--Hline70::after {
@@ -768,52 +744,8 @@ a:hover {
 
 /* =========================================
    HORIZONTAL ROW BASELINE ALIGNMENT
-   - Pins bottoms of columns to the timeline line
-   - Everything stacks upward from that baseline
+   (Removed; consolidated in "ROW BASELINE" section)
 ========================================= */
-.horizontal-panel.panel--row.panel--baseline {
-  /* same grid you already use */
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(24px, 5vw, 64px);
-
-  /* key part: align items to the "bottom" of the content box */
-  align-items: end;
-
-  /* create a spacer below equal to the distance from baseline to panel bottom:
-     baseline Y is measured from the top, so pad the bottom by (100vh - baselineY) */
-  padding-bottom: calc(100vh - var(--timelineY, 70svh));
-}
-
-/* Column content stacks upward; last child hugs the baseline */
-.horizontal-panel.panel--row.panel--baseline .row-entry {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  /* remove earlier big offsets so it sits close to the line */
-  margin: 0;
-}
-
-/* Ensure the "bottom element" pins to the baseline;
-   everything above flows upward naturally */
-.horizontal-panel.panel--row.panel--baseline .row-entry > *:last-child {
-  margin-top: auto;
-}
-
-/* Optional: tighten vertical rhythm near the line */
-.horizontal-panel.panel--row.panel--baseline .row-entry > * + * {
-  margin-top: clamp(8px, 1.2vw, 14px);
-}
-
-/* Mobile: turn the baseline behavior off (stack normally) */
-@media (max-width: 768px) {
-  .horizontal-panel.panel--row.panel--baseline {
-    grid-template-columns: 1fr;
-    align-items: start;
-    padding-bottom: 16px; /* normal padding */
-  }
-}
-
 
 /* =========================================
    PER-FRAME OVERLAYS (transparent)
@@ -981,17 +913,17 @@ a:hover {
 .horizontal-panel.panel--row.panel--baseline {
   /* keep your grid, but create space below equal to distance to baseline */
   padding-bottom: calc(100vh - var(--timelineY, 70svh));
-  align-items: stretch; /* let each column manage its own packing */
+  align-items: stretch;
 }
 
 /* Each column: bottom-pack children; use gap (not margins) for rhythm */
 .horizontal-panel.panel--row.panel--baseline .row-entry {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;                  /* <— pack to baseline */
+  justify-content: flex-end;
   align-items: flex-start;
   gap: var(--baseline-gap, clamp(8px, 1.2vw, 14px));
-  margin: 0;                                  /* kill earlier offsets */
+  margin: 0;
 }
 
 /* Nuke inner margins that push items away from the baseline */
@@ -1000,18 +932,12 @@ a:hover {
 .horizontal-panel.panel--row.panel--baseline .row-entry h2 { margin: 0 !important; }
 
 /* If you had a bottom-pinning trick earlier, disable it here */
-.horizontal-panel.panel--row.panel--baseline .row-entry > *:last-child {
-  margin-top: 0 !important;
-}
+.horizontal-panel.panel--row.panel--baseline .row-entry > *:last-child { margin-top: 0 !important; }
 
 /* Mobile: turn baseline off to avoid cramped stacks */
 @media (max-width: 768px) {
-  .horizontal-panel.panel--row.panel--baseline {
-    padding-bottom: 16px;
-  }
-  .horizontal-panel.panel--row.panel--baseline .row-entry {
-    justify-content: flex-start;
-  }
+  .horizontal-panel.panel--row.panel--baseline { padding-bottom: 16px; }
+  .horizontal-panel.panel--row.panel--baseline .row-entry { justify-content: flex-start; }
 }
 
 /* =========================================
@@ -1019,47 +945,32 @@ a:hover {
    - Adds breathing room above the timeline
 ========================================= */
 .horizontal-panel.panel--row.panel--baseline {
-  /* baseline position + offset upwards */
-  --baseline-gap: 16px; /* adjust this number to taste */
+  --baseline-gap: 50px;
   padding-bottom: calc((100vh - var(--timelineY, 70svh)) + var(--baseline-gap));
 }
 
 .horizontal-panel.panel--row.panel--baseline .row-entry {
-  justify-content: flex-end; /* still packs down */
-  gap: clamp(8px, 1.2vw, 14px);
+  justify-content: flex-end;
+  gap: clamp(8px, 1.2vw, 25px);
 }
 
 /* =========================================
    BASELINE FOR HORIZONTAL SPLIT (L frames)
-   - Pins both columns down to the timeline line
-   - Content "builds upward" from that baseline
 ========================================= */
 .horizontal-panel.panel--split.panel--baseline {
-  /* push the whole grid down so its bottoms meet the baseline */
-  --baseline-gap: 16px; /* tweak buffer above the line */
+  --baseline-gap: 16px;
   padding-bottom: calc((100vh - var(--timelineY, 70svh)) + var(--baseline-gap));
-
-  /* make grid items sit on the bottom of the panel box */
   align-items: end;
 }
 
-/* make sure both columns actually sit on that bottom edge */
-.horizontal-panel.panel--split.panel--baseline .split-col {
-  align-self: end;
-}
+.horizontal-panel.panel--split.panel--baseline .split-col { align-self: end; }
 
-/* avoid inner margins creating phantom gaps at the baseline */
-.horizontal-panel.panel--split.panel--baseline .text-col > * {
-  margin-block-end: 0;
-}
+.horizontal-panel.panel--split.panel--baseline .text-col > * { margin-block-end: 0; }
 
-/* small screens: disable baseline packing to prevent crowding */
 @media (max-width: 768px) {
   .horizontal-panel.panel--split.panel--baseline {
     padding-bottom: 16px;
     align-items: start;
   }
-  .horizontal-panel.panel--split.panel--baseline .split-col {
-    align-self: start;
-  }
+  .horizontal-panel.panel--split.panel--baseline .split-col { align-self: start; }
 }
