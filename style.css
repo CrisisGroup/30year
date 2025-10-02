@@ -80,9 +80,12 @@ a:hover {
 /* =========================================
    VERTICAL PAGES (DEFAULT)
 ========================================= */
+/* The full-width wrapper for each chapter/page */
 .page {
+  position: relative;
+  --lineW: 2px;                 /* 2px avoids half-pixel antialiasing on odd viewports */
+  --spine-left: calc(50% - var(--lineW) / 2);
   min-height: 100vh;
-  display: block;
 }
 
 .page--split {
@@ -443,7 +446,7 @@ a:hover {
   content: "";
   position: absolute;
   top: 0;
-  left: 50%;
+  left: 49.75%;
   transform: translateX(-50%);
   width: var(--lineW);
   height: var(--L-y);
